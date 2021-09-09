@@ -10,19 +10,11 @@
     <h1 class="title main-title">Delta Modulation</h1>
 
     <div class="container">
-        <div class="container-left">
+        <div class="container-canvas">
             <canvas id="canvas"></canvas>
-            <div class="result">
-                <h6 class="title sub-title">RESULT</h3>
-                <hr />
-                <h3 class="">Wave Amplitude(V): <span id="Am"></span></h3>
-                <h3 class="">Wave Frequency(hz): <span id="Fm"></span></h3>
-                <h3 class="">Sampling Frequency(hz): <span id="Fs"></span> </h3>
-                <h3 class="">Delta: <span id="Delta"></span> </h3>
-            </div>
         </div>
 
-        <div class="container-right">
+        <div class="container-variables">
             <div class="variables">
                 <h6 class="title sub-title">VARIABLES</h3>
                 <label for="fname">Amplitude(V):</label><br>
@@ -53,6 +45,15 @@
                 <input type="checkbox" name="scw" id="staircase_wave" checked>
                 <label for="scw">Show Staircase wave</label><br>
             </div>
+        </div>
+
+        <div class="container-result">
+            <h6 class="title sub-title">RESULT</h3>
+            <hr />
+            <h3 class="">Wave Amplitude(V): <span id="Am"></span></h3>
+            <h3 class="">Wave Frequency(hz): <span id="Fm"></span></h3>
+            <h3 class="">Sampling Frequency(hz): <span id="Fs"></span> </h3>
+            <h3 class="">Delta: <span id="Delta"></span> </h3>
         </div>
     </div>
 
