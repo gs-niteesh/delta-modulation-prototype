@@ -1,105 +1,72 @@
+@import url('https://fonts.googleapis.com/css2?family=Urbanist:ital,wght@0,500;1,400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400&display=swap');
+
+
 body {
     margin: 0px;
     padding: 0px;
+    font-family: 'Open Sans', sans-serif;
 }
 
 .title {
-    margin: 0px;
-    padding: 0px;
-    background-color: black;
-
-    color: white;
-    text-align: center;
-    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-}
-
-.main-title {
-    font-size: 40px;
-}
-
-.sub-title {
-    width: fit-content;
-    font-size: 25px;
+    padding: 0.7rem 7rem;
+    margin:0;
+    color: black;
+    font-family: 'Urbanist', sans-serif;
+    position: relative;
+    top:2rem;
 }
 
 .container {
     margin: 0;
     padding: 0;
-    display: flex;
+    display: block;
+    width:100%;
 }
 
-.container-left {
+.container-canvas {
     margin: 0;
     padding-top: 0;
-
-    width: 70%;
-    height: 60%;
+    border: none;
+    width: 100%;
+    height: max-content;
 }
 
-.container-right {
-    margin: 0;
-    padding-top: 0;
+.container-variables {
+    /**/border-left: 2px solid black;
+    width: 80%;
+    padding:1.5rem 3rem;
+}
 
-    width: 30%;
-    height: 60%;
+.container-result {
+    /**/border-left: 2px solid black;
+    width: max-content;
+    max-width: 80%;
+    padding:1.5rem 3rem;
+}
+
+#container-checkbox{
+    width: max-content;
+    max-width: 80%;
+    padding:1.5rem 3rem;
+}
+
+#container-split{
+    display: grid;
+    grid-template-columns: 25% 40% 35%;
 }
 
 #canvas {
-    border: 1px solid black;
-    margin: 1px 0px;
+    border-bottom: 2px solid black;
+    margin: 0px auto;
     padding: 0;
+    display: block;
 }
 
-.variables {
-    padding: 1px 0;
-    width: 100%;
-    height: 300px;
+.subtitle{
+    font-family: 'Urbanist', sans-serif;   
 }
 
-.variables h6 {
-    padding: 0;
-    width: 100%;
-}
-
-.variables label, input{
-    margin-left: 50px;
-}
-
-.control {
-    margin: 0;
-    padding: 0;
-    width: 100%;
-    height: 300px;
-    border: 1px solid black;
-}
-
-.control h6 {
-    padding: 0;
-    width: 100%;
-}
-
-.control button {
-    margin-top: 50px;
-    margin-left: 50px;
-}
-
-#button2 {
-    margin-left: 10px;
-}
-
-.result {
-    margin: 0;
-    padding: 0;
-    width: 100%;
-}
-
-.result h6 {
-    margin: 0;
-    padding: 0;
-    width: 30%;
-}
-
-hr {
-    margin: 0;
-    border-top: 1px dashed black;
+.varname{
+    font-weight: 900;
 }

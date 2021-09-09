@@ -11,7 +11,7 @@ let check_unsampled_wave = document.getElementById("unsampled_wave");
 let check_sampled_points = document.getElementById("sampled_points");
 let check_staircase_wave = document.getElementById("staircase_wave");
 
-let canvas_width = canvas.parentElement.clientWidth;
+let canvas_width = window.screen.width-50;
 let canvas_height = 600;
 let orgx = 200;
 let orgy = 315;
@@ -33,10 +33,11 @@ let delta = 2 * Math.PI * wave_amplitude.value * wave_frequency.value / sampling
 function drawPoint(ctx, x, y) {
     var radius = 3.0;
     ctx.beginPath();
-
-    ctx.fillStyle = 'red';
+    ctx.strokeStyle = "blue";
+    ctx.stroke();
+    ctx.fillStyle = 'black';
     ctx.lineWidth = 1;
-    ctx.arc(x, y, radius, 0, 2 * Math.PI, false);
+    ctx.arc(x, y, radius*1.3, 0, 2 * Math.PI, false);
     ctx.fill();
 
     ctx.closePath();
@@ -51,21 +52,21 @@ function drawAxes() {
     ctx.stroke();
 
     // Horizontal line
-    ctx.moveTo(180, 510);
-    ctx.lineTo(1200, 510);
+    ctx.moveTo(100, 510);
+    ctx.lineTo(window.screen.width-100, 510);
     ctx.strokeStyle = "black";
     ctx.stroke();
 
     // Base line
     ctx.moveTo(orgx, orgy);
-    ctx.lineTo(1200, orgy);
+    ctx.lineTo(window.screen.width-100, orgy);
     ctx.strokeStyle = "black";
     ctx.stroke();
 
     ctx.font = "20px Arial";
     ctx.fillStyle = "black";
     ctx.fillText("Amplitude", 100, 120, 90);
-    ctx.fillText("Time", 1150, 530, 70);
+    ctx.fillText("Time", window.screen.width-200, 530, 70);
     ctx.closePath();
 
 }
@@ -82,6 +83,8 @@ function xrange(start, stop, step) {
 
 function plotStairCase(arr) {
     ctx.beginPath();
+    ctx.strokeStyle = "blue";
+    ctx.stroke();
     ctx.moveTo(orgx, orgy);
 
     // Scale the values in the array for plotting
@@ -122,7 +125,7 @@ function plotSine(ctx, xOffset, yOffset) {
 
     ctx.beginPath();
     ctx.lineWidth = 2;
-    ctx.strokeStyle = "rgb(66,44,255)";
+    ctx.strokeStyle = "red";
 
     var idx = 0;
     if (check_unsampled_wave.checked) {
