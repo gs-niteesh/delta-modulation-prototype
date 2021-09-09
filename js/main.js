@@ -13,7 +13,7 @@ let check_staircase_wave = document.getElementById("staircase_wave");
 
 let canvas_width = canvas.parentElement.clientWidth;
 let canvas_height = 600;
-let orgx = 200;
+let orgx = 50;
 let orgy = 315;
 
 
@@ -51,7 +51,7 @@ function drawAxes() {
     ctx.stroke();
 
     // Horizontal line
-    ctx.moveTo(180, 510);
+    ctx.moveTo(30, 510);
     ctx.lineTo(1200, 510);
     ctx.strokeStyle = "black";
     ctx.stroke();
