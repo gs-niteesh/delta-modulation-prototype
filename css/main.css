@@ -33,14 +33,13 @@ body {
 }
 
 .container-variables {
-    /**/border-left: 1px solid black;
-    width: max-content;
-    max-width: 80%;
+    /**/border-left: 2px solid black;
+    width: 80%;
     padding:1.5rem 3rem;
 }
 
 .container-result {
-    /**/border-left: 1px solid black;
+    /**/border-left: 2px solid black;
     width: max-content;
     max-width: 80%;
     padding:1.5rem 3rem;
@@ -54,9 +53,8 @@ body {
 
 #container-split{
     display: grid;
-    grid-template-columns: 34% 33% 33%;
+    grid-template-columns: 25% 40% 35%;
 }
-
 
 #canvas {
     border-bottom: 2px solid black;
@@ -65,6 +63,10 @@ body {
     display: block;
 }
 
-h2, .subtitle{
+.subtitle{
     font-family: 'Urbanist', sans-serif;   
+}
+
+.varname{
+    font-weight: 900;
 }

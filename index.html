@@ -6,6 +6,7 @@
     <link rel="stylesheet" href="./css/main.css">
     <link rel="stylesheet" href="./css/scrollbars.css">
     <link rel="stylesheet" href="./css/checkmark.css">
+    <link rel="stylesheet" href="./css/customslider.css">
     <title>Delta Modulation</title>
 </head>
 <body>
@@ -16,6 +17,7 @@
             <canvas id="canvas"></canvas>
         </div>
 
+        <br><br><br>
 
         <div id="container-split">
             <div id="container-checkbox">
@@ -35,24 +37,24 @@
             </div>
             <div class="container-variables">
                 <div class="variables">
-                    <h2>Variables</h2>
-                    <label for="fname">Amplitude(V):</label><br>
+                    <h1 class="subtitle">Variables</h1>
+                    <label for="fname" class="varname">Amplitude(V):</label><br>
                     <div class="slidecontainer">
                         <input type="range" min="2" max="20" step="1" value="2" class="slider" id="amplitude">
                     </div>
-                    <label for="fname">Frequency(hz):</label><br>
+                    <label for="fname" class="varname">Frequency(hz):</label><br>
                     <div class="slidecontainer">
                         <input type="range" min="1" max="20" step="1" value="1" class="slider" id="frequency">
                     </div>
-                    <label for="fname">Sampling Frequency(hz):</label><br>
+                    <label for="fname" class="varname">Sampling Frequency(hz):</label><br>
                     <div class="slidecontainer">
                         <input type="range" min="20" max="200" step="2" value="20" class="slider" id="sampling_frequency">
                     </div>
-                    <label for="fname">Vertical Scale:</label><br>
+                    <label for="fname" class="varname">Vertical Scale:</label><br>
                     <div class="slidecontainer">
                         <input type="range" min="20" max="200" step="10" value="50" class="slider" id="vertical_scale_factor">
                     </div>
-                    <label for="fname">Horizontal Scale:</label><br>
+                    <label for="fname" class="varname">Horizontal Scale:</label><br>
                     <div class="slidecontainer">
                         <input type="range" min="20" max="200" step="10" value="50" class="slider" id="horizontal_scale_factor">
                     </div>
@@ -60,7 +62,7 @@
             </div>
 
             <div class="container-result">
-                <h2>Result</h2>
+                <h1 class="subtitle">Result</h1>
                 <h3>Wave Amplitude(V): <span id="Am"></span></h3>
                 <h3>Wave Frequency(hz): <span id="Fm"></span></h3>
                 <h3>Sampling Frequency(hz): <span id="Fs"></span> </h3>
@@ -68,6 +70,7 @@
             </div>
         </div>
     </div>
+    <br><br><br><br>
 
 </body>
 <script type="module" src="./js/main.js"></script>
