@@ -217,6 +217,14 @@ function plotPcmWave(t,x,xOffset,yOffset)
                 ctx.stroke();
             }
         }
+        if(idx>0)
+        {
+            if((bcx==0)&&(binNumbList[idx-1]==1))
+            {
+                ctx.lineTo(xOffset + (idx) * horizontal_scaling_factor/bitLength, yOffset - vertical_scaling_factor *3);
+                ctx.stroke();
+            }
+        }
         ctx.lineTo(xOffset + idx * horizontal_scaling_factor/bitLength, yOffset - vertical_scaling_factor *3* bcx);
         ctx.stroke();
         idx++;
