@@ -1,6 +1,8 @@
 let canvas = document.getElementById('canvas');
 let ctx = canvas.getContext('2d');
 
+var dFlag=true;
+
 let sampling_frequency_element = document.getElementById("Fs");
 let wave_frequency_element = document.getElementById("Fm");
 let wave_amplitude_element = document.getElementById("Am");
@@ -183,15 +185,6 @@ function plotPcmWave(t,x,xOffset,yOffset)
     ctx.strokeStyle = "darkgreen";
     ctx.stroke();
     ctx.moveTo(orgx, orgy);
-    /*
-    var idx = 0;
-    while (idx < x.length) {
-        ctx.lineTo(xOffset + idx * horizontal_scaling_factor, yOffset - vertical_scaling_factor * 2);
-        ctx.stroke();
-        idx++;
-    }
-    */
-    ///////////////////////
     
     var binList=[]  // contains all of the binary coded words
     var entireBinaryString = "";
@@ -200,12 +193,31 @@ function plotPcmWave(t,x,xOffset,yOffset)
         binList.push(temp);
         entireBinaryString+=temp;
     });
-    //console.log("x=>",x);
-    //console.log("binList=>",entireBinaryString);
+    var binNumbList=[];
+    for(var i=0;i<entireBinaryString.length;i++)
+    {
+        binNumbList.push(Number(entireBinaryString[i]));
+    }
+    if(dFlag)
+    {
+        console.log("binList=>",binList);
+        console.log("binString=>",entireBinaryString);
+        console.log("binNumbList=>",binNumbList);
+        dFlag=!dFlag;
+    }
     var totalDivisions = x.length*bitLength;
     var idx = 0;
     while (idx < totalDivisions) {
-        ctx.lineTo(xOffset + idx * horizontal_scaling_factor/bitLength, yOffset - vertical_scaling_factor *3* Number(entireBinaryString[idx]));
+        var bcx=binNumbList[idx];
+        if(idx>0)
+        {
+            if((bcx==1)&&(binNumbList[idx-1]==0))
+            {
+                ctx.lineTo(xOffset + (idx) * horizontal_scaling_factor/bitLength, yOffset - vertical_scaling_factor *0);
+                ctx.stroke();
+            }
+        }
+        ctx.lineTo(xOffset + idx * horizontal_scaling_factor/bitLength, yOffset - vertical_scaling_factor *3* bcx);
         ctx.stroke();
         idx++;
     }
