@@ -178,29 +178,37 @@ function plotSine(ctx, xOffset, yOffset) {
 
 function plotPcmWave(t,x,xOffset,yOffset)
 {
-    var width = 1000;
-    var amplitude = wave_amplitude.value;
-    var frequency = wave_frequency.value;
-    var Fs = sampling_frequency.value;
+    var bitLength=5;
     ctx.beginPath();
     ctx.strokeStyle = "darkgreen";
     ctx.stroke();
     ctx.moveTo(orgx, orgy);
+    /*
     var idx = 0;
-        while (idx < x.length) {
-            ctx.lineTo(xOffset + idx * horizontal_scaling_factor, yOffset - vertical_scaling_factor * 2);
-            ctx.stroke();
-            idx++;
-        }
+    while (idx < x.length) {
+        ctx.lineTo(xOffset + idx * horizontal_scaling_factor, yOffset - vertical_scaling_factor * 2);
+        ctx.stroke();
+        idx++;
+    }
+    */
     ///////////////////////
     
-    var w=[]
+    var binList=[]  // contains all of the binary coded words
+    var entireBinaryString = "";
     x.forEach((item)=>{
-        w.push(d2b(item*10));
+        var temp=d2b(item*10,bitLength);
+        binList.push(temp);
+        entireBinaryString+=temp;
     });
-    console.log("x=>",x);
-    console.log("w=>",w);
-    
+    //console.log("x=>",x);
+    //console.log("binList=>",entireBinaryString);
+    var totalDivisions = x.length*bitLength;
+    var idx = 0;
+    while (idx < totalDivisions) {
+        ctx.lineTo(xOffset + idx * horizontal_scaling_factor/bitLength, yOffset - vertical_scaling_factor *3* Number(entireBinaryString[idx]));
+        ctx.stroke();
+        idx++;
+    }
     ///////////////////////
     ctx.closePath();
 }
@@ -229,8 +237,6 @@ function draw() {
 
 function d2b(x,bitLength=5)
 {
-    var isNegative = x<0;
-    //x = isNegative ? -1*x : x ;
     var result = "0000000000000000000000000"+(x >>> 0).toString(2);
     return(result.substr(result.length-bitLength));
 }
