@@ -243,7 +243,7 @@ function draw() {
     ctx.fillStyle = "white";
     ctx.fillRect(0, 0, canvas_width, canvas_height);
 
-    wave_amplitude_element.innerText = wave_amplitude.value + ' V';
+    wave_amplitude_element.innerText = wave_amplitude.value*10 + ' V';
     wave_frequency_element.innerText = wave_frequency.value + ' Hz';
     sampling_frequency_element.innerText = sampling_frequency.value + ' Hz';
     delta_element.innerText = delta;
