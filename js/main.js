@@ -10,6 +10,7 @@ let horizontal_scale_element = document.getElementById("horizontal_scale_factor"
 let check_unsampled_wave = document.getElementById("unsampled_wave");
 let check_sampled_points = document.getElementById("sampled_points");
 let check_staircase_wave = document.getElementById("staircase_wave");
+let check_pcm_wave = document.getElementById("pcm_wave");
 
 let canvas_width = window.screen.width-50;
 let canvas_height = 600;
@@ -115,8 +116,8 @@ function plotSine(ctx, xOffset, yOffset) {
     var frequency = wave_frequency.value;
     var Fs = sampling_frequency.value;
     var StopTime = 1;
-    var dt = 1 / Fs;
-    var t = xrange(0, StopTime + dt, dt);
+    var dt = 1 / Fs; // sampling interval
+    var t = xrange(0, StopTime + dt, dt); // generates a list of t values seperated by sampling interval
 
     var x = [];
     t.forEach((val) => {
@@ -136,6 +137,9 @@ function plotSine(ctx, xOffset, yOffset) {
     }
     ctx.stroke();
     ctx.save();
+
+    if (check_pcm_wave.checked)
+        plotPcmWave(t,x,xOffset,yOffset);
 
 
     delta = ((2 * Math.PI * amplitude * frequency) / Fs).toFixed(4);
@@ -172,6 +176,35 @@ function plotSine(ctx, xOffset, yOffset) {
         plotStairCase(xq);
 }
 
+function plotPcmWave(t,x,xOffset,yOffset)
+{
+    var width = 1000;
+    var amplitude = wave_amplitude.value;
+    var frequency = wave_frequency.value;
+    var Fs = sampling_frequency.value;
+    ctx.beginPath();
+    ctx.strokeStyle = "darkgreen";
+    ctx.stroke();
+    ctx.moveTo(orgx, orgy);
+    var idx = 0;
+        while (idx < x.length) {
+            ctx.lineTo(xOffset + idx * horizontal_scaling_factor, yOffset - vertical_scaling_factor * 2);
+            ctx.stroke();
+            idx++;
+        }
+    ///////////////////////
+    
+    var w=[]
+    x.forEach((item)=>{
+        w.push(d2b(item*10));
+    });
+    console.log("x=>",x);
+    console.log("w=>",w);
+    
+    ///////////////////////
+    ctx.closePath();
+}
+
 function drawGraph() {
     drawAxes();
     plotSine(ctx, orgx, orgy);
@@ -193,5 +226,14 @@ function draw() {
 
     requestAnimationFrame(draw);
 }
+
+function d2b(x,bitLength=5)
+{
+    var isNegative = x<0;
+    //x = isNegative ? -1*x : x ;
+    var result = "0000000000000000000000000"+(x >>> 0).toString(2);
+    return(result.substr(result.length-bitLength));
+}
+
 
 requestAnimationFrame(draw);
