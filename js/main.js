@@ -180,7 +180,7 @@ function plotSine(ctx, xOffset, yOffset) {
 
 function plotPcmWave(t,x,xOffset,yOffset)
 {
-    var bitLength=5;
+    var bitLength=8;
     ctx.beginPath();
     ctx.strokeStyle = "darkgreen";
     ctx.stroke();
