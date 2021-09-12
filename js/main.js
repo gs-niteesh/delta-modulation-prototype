@@ -1,7 +1,7 @@
 let canvas = document.getElementById('canvas');
 let ctx = canvas.getContext('2d');
 
-var dFlag=true;
+//var dFlag=true;
 
 let sampling_frequency_element = document.getElementById("Fs");
 let wave_frequency_element = document.getElementById("Fm");
@@ -9,6 +9,8 @@ let wave_amplitude_element = document.getElementById("Am");
 let delta_element = document.getElementById("Delta");
 let vertical_scale_element = document.getElementById("vertical_scale_factor");
 let horizontal_scale_element = document.getElementById("horizontal_scale_factor");
+let bl_scale_element = document.getElementById("bit_length_factor");
+let bit_length_element = document.getElementById("BL");
 let check_unsampled_wave = document.getElementById("unsampled_wave");
 let check_sampled_points = document.getElementById("sampled_points");
 let check_staircase_wave = document.getElementById("staircase_wave");
@@ -180,7 +182,7 @@ function plotSine(ctx, xOffset, yOffset) {
 
 function plotPcmWave(t,x,xOffset,yOffset)
 {
-    var bitLength=8;
+    var bitLength=bl_scale_element.value;
     ctx.beginPath();
     ctx.strokeStyle = "darkgreen";
     ctx.stroke();
@@ -200,9 +202,11 @@ function plotPcmWave(t,x,xOffset,yOffset)
     }
     if(dFlag)
     {
+        console.log("bitLength=>",bitLength);
         console.log("binList=>",binList);
         console.log("binString=>",entireBinaryString);
         console.log("binNumbList=>",binNumbList);
+        console.log("------------------------");
         dFlag=!dFlag;
     }
     var totalDivisions = x.length*bitLength;
@@ -249,6 +253,7 @@ function draw() {
     delta_element.innerText = delta;
     vertical_scaling_factor = vertical_scale_element.value;
     horizontal_scaling_factor = horizontal_scale_element.value;
+    bit_length_element.innerText = bl_scale_element.value;
 
     drawGraph();
 

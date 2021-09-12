@@ -10,6 +10,9 @@
     <title>Pulse Code Modulation</title>
 </head>
 <body>
+    <script>
+        var dFlag=true;
+    </script>
     <h1 class="title">Puse Code Modulation</h1>
 
     <div class="container">
@@ -62,6 +65,10 @@
                     <div class="slidecontainer">
                         <input type="range" min="20" max="200" step="10" value="50" class="slider" id="horizontal_scale_factor">
                     </div>
+                    <label for="fname" class="varname">Bit Length:</label><br>
+                    <div class="slidecontainer">
+                        <input type="range" min="5" max="16" step="1" value="8" class="slider" id="bit_length_factor" onchange="dFlag=true;">
+                    </div>
                 </div>
             </div>
 
@@ -71,6 +78,7 @@
                 <h3>Wave Frequency(hz): <span id="Fm"></span></h3>
                 <h3>Sampling Frequency(hz): <span id="Fs"></span> </h3>
                 <h3>Delta: <span id="Delta"></span> </h3>
+                <h3>Bit Length: <span id="BL"></span> </h3>
             </div>
         </div>
     </div>
