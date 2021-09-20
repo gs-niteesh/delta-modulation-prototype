@@ -193,7 +193,10 @@ function plotPcmWave(t,x,xOffset,yOffset)
     var entireBinaryString = "";
     x.forEach((item)=>{
         quantizedList.push(Math.round(item));
-        var temp=d2b(Math.round(item),bitLength);
+        /////////////// EXPERIMENTAL ////////////////////
+        var temp=customBinaryFunc(Math.round(item),wave_amplitude.value*2,bitLength);
+        /////////////////////////////////////////////////
+        //var temp=d2b(Math.round(item),bitLength);
         binList.push(temp);
         entireBinaryString+=temp;
     });
@@ -263,11 +266,41 @@ function draw() {
     requestAnimationFrame(draw);
 }
 
-function d2b(x,bitLength=5)
+function d2b(x,bitLength=8)
 {
     var result = "0000000000000000000000000"+(x >>> 0).toString(2);
     return(result.substr(result.length-bitLength));
 }
 
+function customBinaryFunc(x,amplitude,bitLength=8)
+{
+    var n=2;
+    while(1)
+    {
+        if(Math.pow(2,n)>amplitude+1)
+            break;
+        else
+            n+=1;
+    }
+    var quantizedAmpList=[]
+    var equivalentBinList=[]
+    var i=0;
+    while(i<=Math.pow(2,n))
+    {
+        //quantizedAmpList.push(i);
+        equivalentBinList.push(d2b(i,bitLength));
+        i+=1;
+    }
+    var i = -1*Math.pow(2,n)/2;
+    while(i<=Math.pow(2,n)/2)
+    {
+        quantizedAmpList.push(i);
+        i+=1;
+    }
+    //console.log(quantizedAmpList);
+    //console.log(equivalentBinList);
+    //console.log(equivalentBinList[quantizedAmpList.indexOf(x)]);
+    return(equivalentBinList[quantizedAmpList.indexOf(x)]);
+}
 
 requestAnimationFrame(draw);
