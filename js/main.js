@@ -195,9 +195,12 @@ function plotPcmWave(t,x,xOffset,yOffset)
     x.forEach((item)=>{
         quantizedList.push(Math.round(item));
         /////////////// EXPERIMENTAL ////////////////////
-        var temp=customBinaryFunc(Math.round(item),wave_amplitude.value*2,bitLength);
+        //var temp=customBinaryFunc((check_quantized_points.checked ? Math.round(item) : item),wave_amplitude.value*2,bitLength);
+        if(check_quantized_points.checked)
+            var temp=customBinaryFunc(Math.round(item),wave_amplitude.value*2,bitLength);
+        else
+            var temp=d2b(item,bitLength);
         /////////////////////////////////////////////////
-        //var temp=d2b(Math.round(item),bitLength);
         binList.push(temp);
         entireBinaryString+=temp;
     });
