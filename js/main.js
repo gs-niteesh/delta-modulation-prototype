@@ -1,8 +1,6 @@
 let canvas = document.getElementById('canvas');
 let ctx = canvas.getContext('2d');
 
-//var dFlag=true;
-
 let sampling_frequency_element = document.getElementById("Fs");
 let wave_frequency_element = document.getElementById("Fm");
 let wave_amplitude_element = document.getElementById("Am");
@@ -195,7 +193,6 @@ function plotPcmWave(t,x,xOffset,yOffset)
     x.forEach((item)=>{
         quantizedList.push(Math.round(item));
         /////////////// EXPERIMENTAL ////////////////////
-        //var temp=customBinaryFunc((check_quantized_points.checked ? Math.round(item) : item),wave_amplitude.value*2,bitLength);
         if(check_quantized_points.checked)
             var temp=customBinaryFunc(Math.round(item),wave_amplitude.value*2,bitLength);
         else
@@ -301,9 +298,6 @@ function customBinaryFunc(x,amplitude,bitLength=8)
         quantizedAmpList.push(i);
         i+=1;
     }
-    //console.log(quantizedAmpList);
-    //console.log(equivalentBinList);
-    //console.log(equivalentBinList[quantizedAmpList.indexOf(x)]);
     return(equivalentBinList[quantizedAmpList.indexOf(x)]);
 }
 
