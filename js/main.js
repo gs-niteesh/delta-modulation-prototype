@@ -13,6 +13,7 @@ let bl_scale_element = document.getElementById("bit_length_factor");
 let bit_length_element = document.getElementById("BL");
 let check_unsampled_wave = document.getElementById("unsampled_wave");
 let check_sampled_points = document.getElementById("sampled_points");
+let check_quantized_points = document.getElementById("quantized_points");
 let check_staircase_wave = document.getElementById("staircase_wave");
 let check_pcm_wave = document.getElementById("pcm_wave");
 
@@ -150,9 +151,9 @@ function plotSine(ctx, xOffset, yOffset) {
     if (check_sampled_points.checked) {
         var idx = 0;
         while (idx < width) {
-            drawPoint(ctx, xOffset + idx * horizontal_scaling_factor, yOffset - vertical_scaling_factor * Math.round(x[idx]));
+            drawPoint(ctx, xOffset + idx * horizontal_scaling_factor, yOffset - vertical_scaling_factor * (check_quantized_points.checked ? Math.round(x[idx]) : x[idx]));
 
-            ctx.moveTo(xOffset + idx * horizontal_scaling_factor, yOffset - vertical_scaling_factor * Math.round(x[idx]))
+            ctx.moveTo(xOffset + idx * horizontal_scaling_factor, yOffset - vertical_scaling_factor * (check_quantized_points.checked ? Math.round(x[idx]) : x[idx]))
             ctx.lineTo(xOffset + idx * horizontal_scaling_factor, orgy)
             ctx.stroke();
             idx++;
