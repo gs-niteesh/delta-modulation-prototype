@@ -13,19 +13,36 @@
     <script>
         var dFlag=true;
         var isQuantizationOn=true;
+        var isPCMon = true;
+        var isSamplingOn = true;
         function quantCheck()
         {
             setTimeout(function() { 
                 isQuantizationOn=!isQuantizationOn;
             console.log(isQuantizationOn);
-            if(isQuantizationOn==false)
+            if(isQuantizationOn==false && isPCMon==true)
             {
-                alert("Quantization is turned off ! This affects PCM output and hence PCM wave is being turned off.")
+                alert("Quantization is turned off ! \nThis affects PCM output and hence PCM wave is being turned off.")
                 document.getElementById("pcm_wave").click();
             }
             
              }, 500);
+        }
+        function pcm_check()
+        {
+            setTimeout(function() { 
+                isPCMon = !isPCMon;
+            if(isPCMon==true && (document.getElementById("quantized_points").checked==false || document.getElementById("sampled_points").checked==false) )
+            {
+                alert("PCM wave malfunctioned.\nTry again after turning On Sampling and Quantization !")
+                document.getElementById("pcm_wave").click();
+            }
             
+             }, 400);
+        }
+        function sampCheck()
+        {
+                isSamplingOn = !isSamplingOn;    
         }
     </script>
     <h1 class="title">Puse Code Modulation</h1>
@@ -45,7 +62,7 @@
                     <span class="checkmark"></span>
                 </label><br>
                 <label class="checkbox-container"><span class="subspan">Enable Sampling</span>
-                    <input type="checkbox" name="sp" id="sampled_points" checked>
+                    <input type="checkbox" name="sp" id="sampled_points" checked onchange="sampCheck()">
                     <span class="checkmark"></span>
                 </label><br>
                 <label class="checkbox-container"><span class="subspan">Enable Quantization</span>
@@ -57,7 +74,7 @@
                     <span class="checkmark"></span>
                 </label><br style="display:none;">
                 <label class="checkbox-container"><span class="subspan">Show PCM wave</span>
-                    <input type="checkbox" name="pcmw" id="pcm_wave" checked>
+                    <input type="checkbox" name="pcmw" id="pcm_wave" checked onchange="pcm_check()">
                     <span class="checkmark"></span>
                 </label><br>
             </div>
