@@ -1,36 +1,52 @@
+/*
+ * This simulation uses the HTML5 canvas API.
+ * Refer to this site https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API
+ */
 let canvas = document.getElementById('canvas');
+
+
+/*
+ * ctx stands for context - Every drawing function call is based on this context
+ * The below comment is a special type of comment which will inform VSCode about the type
+ * of the variable. Here ctx is of type *CanvasRenderingContext2D*. This is optional adding
+ * this will let have better autocomplete features. Without this you won't have proper
+ * autocompletion when you do *ctx.*
+ */
+/** @type {CanvasRenderingContext2D} */
 let ctx = canvas.getContext('2d');
 
-let sampling_frequency_element = document.getElementById("Fs");
-let wave_frequency_element = document.getElementById("Fm");
-let wave_amplitude_element = document.getElementById("Am");
-let delta_element = document.getElementById("Delta");
-let vertical_scale_element = document.getElementById("vertical_scale_factor");
-let horizontal_scale_element = document.getElementById("horizontal_scale_factor");
-let check_unsampled_wave = document.getElementById("unsampled_wave");
-let check_sampled_points = document.getElementById("sampled_points");
-let check_staircase_wave = document.getElementById("staircase_wave");
+let sampling_frequency_span = document.getElementById("Fs");
+let wave_frequency_span = document.getElementById("Fm");
+let wave_amplitude_span = document.getElementById("Am");
+let delta_span = document.getElementById("Delta");
+let vertical_scale_slider = document.getElementById("vertical_scale_factor");
+let horizontal_scale_slider = document.getElementById("horizontal_scale_factor");
+let unsampled_wave_checkbox = document.getElementById("unsampled_wave");
+let sampled_points_checkbox = document.getElementById("sampled_points");
+let staircase_wave_checkbox = document.getElementById("staircase_wave");
 
 let canvas_width = window.screen.width-50;
 let canvas_height = 600;
 let orgx = 200;
 let orgy = 315;
 
-
 // Set resolution for canvas
 canvas.width = canvas_width;
 canvas.height = canvas_height;
 
-let wave_amplitude = document.getElementById("amplitude");
-let wave_frequency = document.getElementById("frequency");
-let sampling_frequency = document.getElementById("sampling_frequency");
+let wave_amplitude_slider = document.getElementById("amplitude");
+let wave_frequency_slider = document.getElementById("frequency");
+let sampling_frequency_slider = document.getElementById("sampling_frequency");
 
-let vertical_scaling_factor = vertical_scale_element.value;
-let horizontal_scaling_factor = horizontal_scale_element.value;
+let vertical_scaling_factor = vertical_scale_slider.value;
+let horizontal_scaling_factor = horizontal_scale_slider.value;
 
-let delta = 2 * Math.PI * wave_amplitude.value * wave_frequency.value / sampling_frequency.value;
+let delta = 2 * Math.PI * wave_amplitude_slider.value * wave_frequency_slider.value / sampling_frequency_slider.value;
 
-function drawPoint(ctx, x, y) {
+/*
+ * This function will draw a point at location x, y
+ */
+function drawPoint(x, y) {
     var radius = 3.0;
     ctx.beginPath();
     ctx.strokeStyle = "blue";
@@ -43,6 +59,7 @@ function drawPoint(ctx, x, y) {
     ctx.closePath();
 }
 
+// Draws the axes for the graph
 function drawAxes() {
     ctx.beginPath();
     // Vertical line
@@ -71,6 +88,11 @@ function drawAxes() {
 
 }
 
+/*
+ * Returns an array of values starting with value *start* ending
+ * at value *stop* and with an increment of *step*.
+ * xrange(1, 3, 0.5) will return [1, 1.5, 2, 2.5, 3]
+ */
 function xrange(start, stop, step) {
     var res = [];
     var i = start;
@@ -81,17 +103,30 @@ function xrange(start, stop, step) {
     return res;
 }
 
+/* This function takes an array as the argument and will the corresponding staircase/square wave for its
+ * values.
+ * For eg: if you pass arr = [0, 1, 0, 1, 1, 0]
+ * You will get the following wave
+ *     ____     _______
+ * ___|    |___|       |_____
+ */
 function plotStairCase(arr) {
     ctx.beginPath();
     ctx.strokeStyle = "blue";
     ctx.stroke();
-    ctx.moveTo(orgx, orgy);
 
     // Scale the values in the array for plotting
+    // Eg: if arr = [1, 1, 2] and scaling factor is 10
+    // then arr = [10, 10, 20]
     arr.forEach((_, idx) => {
         arr[idx] *= vertical_scaling_factor;
     });
 
+    // Learn about moveTo from the docs
+    ctx.moveTo(arr[0], orgy);
+
+    // The below code is bit hard to explain through comments try going throught them
+    // if you don't understand then i'll try explaining it.
     ctx.lineWidth = 1;
 
     var px = orgx;
@@ -109,15 +144,18 @@ function plotStairCase(arr) {
     ctx.closePath();
 }
 
-function plotSine(ctx, xOffset, yOffset) {
+// Will draw the sine wave starting from loc xOffset, yOffset
+function plotSine(xOffset, yOffset) {
     var width = 1000;
-    var amplitude = wave_amplitude.value;
-    var frequency = wave_frequency.value;
-    var Fs = sampling_frequency.value;
+    // Gets the wave's amplitude, frequency and sampling freq value.
+    var amplitude = wave_amplitude_slider.value;
+    var frequency = wave_frequency_slider.value;
+    var Fs = sampling_frequency_slider.value;
+
+    // Generates the values for the sine wave.
     var StopTime = 1;
     var dt = 1 / Fs;
     var t = xrange(0, StopTime + dt, dt);
-
     var x = [];
     t.forEach((val) => {
         x.push(amplitude * Math.sin(2 * Math.PI * frequency * val));
@@ -127,8 +165,9 @@ function plotSine(ctx, xOffset, yOffset) {
     ctx.lineWidth = 2;
     ctx.strokeStyle = "red";
 
+    // Draw the original sine wave.
     var idx = 0;
-    if (check_unsampled_wave.checked) {
+    if (unsampled_wave_checkbox.checked) {
         while (idx < width) {
             ctx.lineTo(xOffset + idx * horizontal_scaling_factor, yOffset - vertical_scaling_factor * x[idx]);
             idx++;
@@ -138,11 +177,12 @@ function plotSine(ctx, xOffset, yOffset) {
     ctx.save();
 
 
+    // Draw the sampled wave (If you dnt understand what I mean by sampled wave just check the sampled wave option from the check box).
     delta = ((2 * Math.PI * amplitude * frequency) / Fs).toFixed(4);
-    if (check_sampled_points.checked) {
+    if (sampled_points_checkbox.checked) {
         var idx = 0;
         while (idx < width) {
-            drawPoint(ctx, xOffset + idx * horizontal_scaling_factor, yOffset - vertical_scaling_factor * x[idx]);
+            drawPoint(xOffset + idx * horizontal_scaling_factor, yOffset - vertical_scaling_factor * x[idx]);
 
             ctx.moveTo(xOffset + idx * horizontal_scaling_factor, yOffset - vertical_scaling_factor * x[idx])
             ctx.lineTo(xOffset + idx * horizontal_scaling_factor, orgy)
@@ -151,6 +191,9 @@ function plotSine(ctx, xOffset, yOffset) {
         }
     }
 
+    // Don't worry about this calculation. This is basically DM calculation if u don't understand
+    // this no issues, even I don't. Just converted mathematical equations to code.
+    // I refered to this video: https://youtu.be/XHHrh-vyhcE
     var e = new Array(x.length);
     var eq = new Array(x.length);
     var xq = new Array(x.length);
@@ -168,13 +211,13 @@ function plotSine(ctx, xOffset, yOffset) {
     }
 
     // Draw the stair case wave
-    if (check_staircase_wave.checked)
+    if (staircase_wave_checkbox.checked)
         plotStairCase(xq);
 }
 
 function drawGraph() {
     drawAxes();
-    plotSine(ctx, orgx, orgy);
+    plotSine(orgx, orgy);
 }
 
 function draw() {
@@ -182,12 +225,13 @@ function draw() {
     ctx.fillStyle = "white";
     ctx.fillRect(0, 0, canvas_width, canvas_height);
 
-    wave_amplitude_element.innerText = wave_amplitude.value + ' V';
-    wave_frequency_element.innerText = wave_frequency.value + ' Hz';
-    sampling_frequency_element.innerText = sampling_frequency.value + ' Hz';
-    delta_element.innerText = delta;
-    vertical_scaling_factor = vertical_scale_element.value;
-    horizontal_scaling_factor = horizontal_scale_element.value;
+    // Set values for the indicators.
+    wave_amplitude_span.innerText = wave_amplitude_slider.value + ' V';
+    wave_frequency_span.innerText = wave_frequency_slider.value + ' Hz';
+    sampling_frequency_span.innerText = sampling_frequency_slider.value + ' Hz';
+    delta_span.innerText = delta;
+    vertical_scaling_factor = vertical_scale_slider.value;
+    horizontal_scaling_factor = horizontal_scale_slider.value;
 
     drawGraph();
 
